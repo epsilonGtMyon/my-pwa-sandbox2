@@ -1,4 +1,4 @@
-const cacheName = "my-pwa-sandbox2-v3";
+const cacheName = "my-pwa-sandbox2-v1";
 const isLocal = location.hostname === "localhost";
 const prefix = isLocal ? "/" : "/my-pwa-sandbox2/";
 
@@ -17,8 +17,7 @@ self.addEventListener("install", async (event) => {
     `icon-512x512.png`,
     `index.html`,
     `manifest.json`,
-    `script.js`,
-    `sw.js`,
+    `script.js`
   ].map(toResource);
 
   console.log("resources", resources);
