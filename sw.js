@@ -34,17 +34,26 @@ self.addEventListener("install", async (event) => {
 self.addEventListener("activate", async (event) => {
   console.log("===========Service worker activated===========", event);
 
-  event.waitUntil((async () => {
-    //ここには今キャッシュにあるやつのkeyList
-    //つまり古いやつ？
-    const keyList = await caches.keys();
-    console.log("keyList", keyList)
-    const promises = keyList
-      .filter(key => cacheName !== key)
-      .map(key => caches.delete(key))
+  event.waitUntil(
+    (async () => {
+      //ここには今キャッシュにあるやつのkeyList
+      //つまり古いやつ？
+      const keyList = await caches.keys();
+      console.log("keyList", keyList);
+      const promises = keyList
+        .filter((key) => {
+          if (!key.startsWith("my-pwa-sandbox2")) {
+            console.log(key);
+            return false;
+          }
 
-    return Promise.all(promises)
-  })())
+          return cacheName !== key;
+        })
+        .map((key) => caches.delete(key));
+
+      return Promise.all(promises);
+    })()
+  );
 });
 
 self.addEventListener("fetch", async (event) => {
