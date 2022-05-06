@@ -1,5 +1,5 @@
 (function () {
-  const version = "1";
+  const version = "3";
 
   const versionElem = document.querySelector("#version");
 
