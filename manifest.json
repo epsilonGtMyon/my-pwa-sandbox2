@@ -2,7 +2,7 @@
     "theme_color": "#f64d35",
     "background_color": "#ffffff",
     "display": "standalone",
-    "scope": "/my-pwa-sandbox2",
+    "scope": "/my-pwa-sandbox2/",
     "start_url": "/my-pwa-sandbox2/index.html",
     "name": "my-pwa-sandbox2",
     "short_name": "PWA\u5b9f\u9a13",
