@@ -1,4 +1,4 @@
-const cacheName = "my-pwa-sandbox2-v1";
+const cacheName = "my-pwa-sandbox2-v2";
 const isLocal = location.hostname === "localhost";
 const prefix = isLocal ? "/" : "/my-pwa-sandbox2/";
 
