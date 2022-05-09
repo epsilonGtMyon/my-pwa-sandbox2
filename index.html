@@ -7,17 +7,33 @@
     <link rel="manifest" href="./manifest.json" />
     <title>PWA実験</title>
     <script src="./script.js" defer></script>
+    <script>
+      window.addEventListener("load", async () => {
+        if ("serviceWorker" in navigator) {
+          let registration
+          const isLocal = location.hostname === "localhost";
+
+          if (isLocal) {
+            registration = await navigator.serviceWorker.register("./sw.js");
+          } else {
+            registration = await navigator.serviceWorker.register("./sw.js", {
+              scope: "/my-pwa-sandbox2/",
+            });
+          }
+
+
+          registration.addEventListener('updatefound', () => {
+            //TODO 
+          })
+        }
+      });
+    </script>
   </head>
   <body>
     <h1>PWAのキャッシュ更新のテスト</h1>
-    
-    <div>
-      version:2
-    </div>
-    
-    <div>
-      version:<span id="version"></span>
-    </div>
 
+    <div>version:1</div>
+
+    <div>version:<span id="version"></span></div>
   </body>
 </html>
