@@ -1,5 +1,5 @@
 (function () {
-  const version = "2";
+  const version = "3";
 
   const versionElem = document.querySelector("#version");
   const unregisterServiceWorkerElem = document.querySelector(
