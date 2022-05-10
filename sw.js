@@ -17,7 +17,7 @@ self.addEventListener("install", async (event) => {
     `icon-512x512.png`,
     `index.html`,
     `manifest.json`,
-    `script.js`
+    `script.js`,
   ].map(toResource);
 
   console.log("resources", resources);
@@ -62,4 +62,12 @@ self.addEventListener("fetch", async (event) => {
       return response || fetch(event.request);
     })()
   );
+});
+
+self.addEventListener("message", (event) => {
+  console.log("message", event);
+  const data = event.data;
+  if (data.type === "fireSkipWaiting") {
+    self.skipWaiting();
+  }
 });

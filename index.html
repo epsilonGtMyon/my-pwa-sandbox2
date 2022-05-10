@@ -10,7 +10,7 @@
     <script>
       window.addEventListener("load", async () => {
         if ("serviceWorker" in navigator) {
-          let registration
+          let registration;
           const isLocal = location.hostname === "localhost";
 
           if (isLocal) {
@@ -21,16 +21,44 @@
             });
           }
 
+          registration.addEventListener("updatefound", () => {
+            console.log("---------------updatefound---------------");
+            const installingWorker = registration.installing;
 
-          registration.addEventListener('updatefound', () => {
-            //TODO 
-          })
+            let firstInstall = true;
+
+            installingWorker.addEventListener("statechange", (event) => {
+              console.log("state", installingWorker.state);
+              if (installingWorker.state === "installed") {
+                setTimeout(() => {
+                  const waitingWorker = registration.waiting;
+                  if (waitingWorker != null) {
+                    firstInstall = false;
+                    console.log(waitingWorker.skipWaiting);
+                    waitingWorker.postMessage({ type: "fireSkipWaiting" });
+                  }
+                });
+              } else if (installingWorker.state === "activated") {
+                if (firstInstall) {
+                  return;
+                }
+                window.alert(
+                  "コンテンツが更新されています。アップデートを行います。"
+                );
+                window.location.reload();
+              }
+            });
+
+            //最終的にはskipWaitingを実行してactivatedになったら リロード
+          });
         }
       });
     </script>
   </head>
   <body>
     <h1>PWAのキャッシュ更新のテスト</h1>
+
+    <button id="unregisterServiceWorker">サービスワーカー解除</button>
 
     <div>version:1</div>
 
